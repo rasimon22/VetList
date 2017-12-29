@@ -33,7 +33,7 @@ CREATE TABLE listings(listing_id int AUTO_INCREMENT,
 	zip_code MEDIUMINT NOT NULL,
 	openings int NOT NULL,
 	description TEXT NOT NULL,
-	PRIMARY KEY listing_id);
+	PRIMARY KEY (listing_id));
 ALTER TABLE experience ADD FOREIGN KEY(user_id) REFERENCES users(user_id);
 ALTER TABLE skills ADD FOREIGN KEY (user_id) REFERENCES users(user_id);
 ALTER TABLE listings ADD FOREIGN KEY(employer_id) REFERENCES employer(employer_id);
