@@ -5,6 +5,7 @@ CREATE TABLE users(user_id int AUTO_INCREMENT,
 	branch tinyint NOT NULL,
 	social_security_number int NOT NULL,
 	uso_status smallint NOT NULL,
+	password varchar(255) NOT NULL,
 	PRIMARY KEY(user_id));
 
 CREATE TABLE experience(exp_id int AUTO_INCREMENT,
