@@ -1,8 +1,10 @@
 from app import app
 from dbconnection import connection
+from flask import render_template
 @app.route('/')
-def index():
-    return '<h1>This is the index</h1>'
+@app.route('/<name>')
+def index(name = None):
+    return render_template('splash.html', name=name)
 @app.route('/register', methods =["GET", "POST"])
 def register_page():
     try:
