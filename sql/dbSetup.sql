@@ -1,10 +1,9 @@
 CREATE TABLE users(user_id int AUTO_INCREMENT,
+        username varchar(50) NOT NULL,
 	first_name varchar(50) NOT NULL,
 	last_name varchar(50) NOT NULL,
-	serial_number varchar(20),
-	branch tinyint NOT NULL,
-	social_security_number int NOT NULL,
-	uso_status smallint NOT NULL,
+	branch varchar(50) NOT NULL,
+	uso_status varchar(50) DEFAULT 'Discharged',
 	password varchar(255) NOT NULL,
 	PRIMARY KEY(user_id));
 
