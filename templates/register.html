@@ -1,0 +1,37 @@
+{%extends "index.html"%}
+{%block page_content%}
+    <h1 class="page-header"> Register </h1>
+    <hr>
+    <div class="container">
+        <form class ="form-horizontal" action="{{url_for('register_post')}}" method = "POST">
+            <fieldset>
+                <div class="control-group">
+                    <div class="controls">
+                        <div class="form-group {%if form.username.errors%} alert alert-danger
+                            {%endif%}">
+                        {{form.username(class="input-xlarge",placeholder="Username")}}
+                        </div>
+                        <small class="help-block">Username may contain letters and numbers, no spaces
+                        </small>
+                        </br>
+                        <div class="form-group {%if form.email.errors%} alert alert-danger {%endif%}">
+                        {{form.email(class="input-xlarge",placeholder="vet@example.com")}}
+                        </br>
+                        </div>
+                        <div class="form-group {%if form.password.errors%} alert alert-danger 
+                            {%endif%}">
+                        {{form.password(class="input-xlarge",placeholder="password")}}
+                        </br>
+                        </div>
+                        <div class="form-group {%if form.confirm.errors%}alert alert-danger
+                            {%endif%}">
+                        {{form.confirm(class="input-xlarge",placeholder="confirm")}}
+                        </br>
+                        </div>
+                        </br>
+                        <input type="submit" class="btn btn-success">
+                    </div>
+                </div>
+            </fieldset>
+    </div>
+{%endblock%}
