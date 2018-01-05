@@ -8,7 +8,8 @@ from models import User
 def index(name = None):
     try: 
         cursor, db = connection()
-        x = cursor.execute("Select employer.name, listings.description from listings, employer WHERE listings.employer_id = employer.employer_id;")
+        x = cursor.execute("Select employer.name, listings.description
+                from listings, employer WHERE listings.employer_id = employer.employer_id;")
         result = cursor.fetchall()
         if result:
             return render_template('splash.html', name=name, listings=result)
