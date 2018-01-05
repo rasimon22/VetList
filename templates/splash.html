@@ -4,9 +4,16 @@
     <hr>
     <div class="container">
         {%if name%}
-        <h1 class="display-3">Hello, {{name}}</h1>
+        <h3 class="display-5">Hello, {{name}}</h3>
         {%else%}
-        <h1 class ="display-3"> Hello, world</h1>
+        <h3 class ="display-5"> Hello, world</h3>
         {%endif%}
+        <ul class = "list-group">
+            {%for listing in listings%}
+            <li class="list-group-item">{{listing[0]}}
+            <small>{{listing[1]}}</small>
+            </li>
+            {%endfor%}
+        </ul>
     </div>
 {%endblock%}
