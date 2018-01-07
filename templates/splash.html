@@ -1,14 +1,14 @@
 {%extends "index.html"%}
 {%block page_content%}
-    <h1 class="page-header">Splash Screen </h1>
+        {%if name%}
+        <h3 class="display-5">Welcome, {{name}}</h3>
+        {%else%}
+        <h3 class ="display-5"> Welcome</h3>
+        {%endif%}
+     
     <hr>
     <div class="container">
-        {%if name%}
-        <h3 class="display-5">Hello, {{name}}</h3>
-        {%else%}
-        <h3 class ="display-5"> Hello, world</h3>
-        {%endif%}
-        <ul class = "list-group">
+       <ul class = "list-group">
             {%for listing in listings%}
             <li class="list-group-item">{{listing[0]}}
             <small>{{listing[1]}}</small>

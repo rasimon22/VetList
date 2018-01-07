@@ -1,0 +1,10 @@
+{%extends "index.html"%}
+{%block page_content%}
+<ul class="list-group">
+{%for post in posts %}
+<li class ="list-group-item"> {{post.company_name}} {{post.description}}</li>
+{%endfor%}
+</ul>
+{%endblock%}
+
+

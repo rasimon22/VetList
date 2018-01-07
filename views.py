@@ -2,9 +2,9 @@ from app import app
 from dbconnection import connection
 from flask import render_template, request, redirect, url_for
 from registerForm import SignupForm
-from models import User
-@app.route('/')
-@app.route('/<name>')
+from models import User, Posting
+@app.route('/index')
+@app.route('/index/<name>')
 def index(name = None):
     try: 
         cursor, db = connection()
@@ -16,10 +16,10 @@ def index(name = None):
             return "Error"
     except Exception as e: 
         return "Database Error"
-@app.route('/register', methods =["GET"])
+@app.route('/register/', methods =["GET"])
 def register_page(): 
     return render_template('register.html', form=SignupForm(csrf_enabled=False))
-@app.route('/register', methods=["POST"])
+@app.route('/register/', methods=["POST"])
 def register_post():
     data=request.form
     form =SignupForm(request.form, csrf_enabled=False)
@@ -30,3 +30,10 @@ def register_post():
         return redirect(url_for('index'))
     else:
         return render_template('register.html', form=form) 
+@app.route('/listing/', methods=['GET'])
+def listings_page():
+    posts = Posting.get_posts()
+    return render_template('listings.html', posts = posts)
+@app.route('/listing/<int:lid>')
+def listing_detail(lid):
+    pass
