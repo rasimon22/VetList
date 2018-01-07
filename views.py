@@ -36,4 +36,5 @@ def listings_page():
     return render_template('listings.html', posts = posts)
 @app.route('/listing/<int:lid>')
 def listing_detail(lid):
-    pass
+    post = Posting.get_post(lid)
+    return render_template("detail.html", post = post)

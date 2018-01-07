@@ -1,4 +1,10 @@
 {%extends "index.html"%}
-{%block page_contents%}
+{%block page_content%}
+<div class="containter">
+    <div class="jumbotron">
+        <h1>{{post.company_name}}</h1>
+        <hr>
+        <p>{{post.description}}</p>
+        <p>There are {{post.openings}} positions available that match this description.</p>
 
 {%endblock%}
