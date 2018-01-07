@@ -56,11 +56,12 @@ class Posting:
             db.close()
             return str(e)
     @classmethod
-    def get_post(cls_object, lid):
+    def get_post(cls_obj, lid):
         try:
             cursor,db = connection()
-            x=cursor.execute("SELECT * FROM listings,employer WHERE listings.listing_id = {} AND listings.employer_id = employer.employer_id;")
+            x=cursor.execute("SELECT * FROM listings,employer WHERE listings.listing_id = {} AND listings.employer_id = employer.employer_id;".format(lid))
             result = cursor.fetchone()
+            print (result)
             db.close
             obj = cls_obj(result[0],result[1],result[2],result[3],result[4],result[6])
             return obj

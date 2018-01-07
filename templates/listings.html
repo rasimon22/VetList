@@ -2,7 +2,9 @@
 {%block page_content%}
 <ul class="list-group">
 {%for post in posts %}
-<li class ="list-group-item"> {{post.company_name}} {{post.description}}</li>
+<li class ="list-group-item"> {{post.company_name}} {{post.description}} 
+<a href="{{url_for('listing_detail', lid=post.l_id)}}"> Click here</a>
+</li>
 {%endfor%}
 </ul>
 {%endblock%}
