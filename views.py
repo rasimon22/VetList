@@ -23,7 +23,7 @@ def register_page():
 @app.route('/register/', methods=["POST"])
 def register_post():
     data=request.form
-    form =SignupForm(request.form)
+    form =SignupForm(data)
     if form.validate():
         hashed_password = generate_password_hash(form.password.data, method = 'sha256')
         user = User(form.username.data, form.firstName.data, form.lastName.data,
