@@ -1,8 +1,10 @@
-from app import app
+from app import app, login_manager 
 from dbconnection import connection
 from flask import render_template, request, redirect, url_for
 from registerForm import SignupForm
 from models import User, Posting
+from werkzeug.security import generate_password_hash
+from flask_login import login_required
 @app.route('/index')
 @app.route('/index/<name>')
 def index(name = None):
@@ -18,19 +20,21 @@ def index(name = None):
         return "Database Error"
 @app.route('/register/', methods =["GET"])
 def register_page(): 
-    return render_template('register.html', form=SignupForm(csrf_enabled=False))
+    return render_template('register.html', form=SignupForm())
 @app.route('/register/', methods=["POST"])
 def register_post():
     data=request.form
-    form =SignupForm(request.form, csrf_enabled=False)
+    form =SignupForm(request.form)
     if form.validate():
+        hashed_password = generate_password_hash(form.password.data, method = 'sha256')
         user = User(form.username.data, form.firstName.data, form.lastName.data,
-                form.branch.data, form.password.data)
+                form.branch.data, hashed_password)
         user.create_user()
         return redirect(url_for('index'))
     else:
         return render_template('register.html', form=form) 
 @app.route('/listing/', methods=['GET'])
+@login_required
 def listings_page():
     posts = Posting.get_posts()
     return render_template('listings.html', posts = posts)
@@ -38,3 +42,13 @@ def listings_page():
 def listing_detail(lid):
     post = Posting.get_post(lid)
     return render_template("detail.html", post = post)
+
+
+
+
+
+
+#this route must remain last
+@app.route('/')
+def root():
+    return redirect(url_for('index'))

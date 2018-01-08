@@ -1,6 +1,8 @@
 from dbconnection import connection
 import hashlib
-class User:
+from flask_login import UserMixin
+from app import login_manager
+class User(UserMixin):
     def __init__(self, username, f_name, l_name, branch,  password, uID = None, uso_status=None):
         m = hashlib.md5()
         self.uID=uID
@@ -21,6 +23,18 @@ class User:
             db.rollback()
             db.close()
             return str(e)
+    @login_manager.user_loader
+    @classmethod
+    def get_user(cls_obj, username):
+        try:
+            cursor, db = connection()
+            y = cursor.execute("SELECT * from `vetlist`.`users` WHERE `users`.`username` = '{}';".format(username))
+            result = cursor.fetchone()
+            db.close()
+            return cls_obj(result[1],result[2],result[3],result[4],result[6],result[0], result[5]) 
+        except Exception as e:
+            db.close()
+            return "db error"
 class Posting:
     def __init__ (self, l_id, e_id, zip_code, openings, description, company_name):
         self.l_id = l_id

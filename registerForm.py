@@ -1,9 +1,9 @@
-from flask.ext.wtf import Form
+from flask_wtf import FlaskForm
 from wtforms import TextField, PasswordField, validators, HiddenField
 from wtforms import TextAreaField, BooleanField, SelectField
 from wtforms.validators import Required, EqualTo, Optional
 from wtforms.validators import Length, Email
-class SignupForm(Form):
+class SignupForm(FlaskForm):
     branches = [('USMC', 'United States Marine Corps'),
             ('Navy','U.S. Navy'), ('Army','U.S. Army'), 
             ('USAF', 'United States Air Force'), ('USCG', 'U.S. Coast Guard')] 
