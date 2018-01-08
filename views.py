@@ -1,10 +1,9 @@
-from app import app, login_manager 
+from app import app  
 from dbconnection import connection
 from flask import render_template, request, redirect, url_for
 from registerForm import SignupForm
 from models import User, Posting
 from werkzeug.security import generate_password_hash
-from flask_login import login_required
 @app.route('/index')
 @app.route('/index/<name>')
 def index(name = None):
@@ -17,7 +16,7 @@ def index(name = None):
         else:
             return "Error"
     except Exception as e: 
-        return "Database Error"
+        return str(e)
 @app.route('/register/', methods =["GET"])
 def register_page(): 
     return render_template('register.html', form=SignupForm())
@@ -34,7 +33,6 @@ def register_post():
     else:
         return render_template('register.html', form=form) 
 @app.route('/listing/', methods=['GET'])
-@login_required
 def listings_page():
     posts = Posting.get_posts()
     return render_template('listings.html', posts = posts)

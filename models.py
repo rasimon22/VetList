@@ -1,7 +1,6 @@
 from dbconnection import connection
 import hashlib
 from flask_login import UserMixin
-from app import login_manager
 class User(UserMixin):
     def __init__(self, username, f_name, l_name, branch,  password, uID = None, uso_status=None):
         m = hashlib.md5()
@@ -23,7 +22,6 @@ class User(UserMixin):
             db.rollback()
             db.close()
             return str(e)
-    @login_manager.user_loader
     @classmethod
     def get_user(cls_obj, username):
         try:
