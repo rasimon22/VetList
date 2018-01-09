@@ -5,4 +5,4 @@ app.config.from_pyfile('config.py')
 from accounts import *
 from views import *
 if __name__ == '__main__':
-	app.run()
+    app.run()

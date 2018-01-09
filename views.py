@@ -4,12 +4,15 @@ from flask import render_template, request, redirect, url_for
 from registerForm import SignupForm
 from models import User, Posting
 from werkzeug.security import generate_password_hash
+
+
 @app.route('/index')
 @app.route('/index/<name>')
-def index(name = None):
+def index(name=None):
     try: 
         cursor, db = connection()
-        x = cursor.execute("Select employer.name, listings.description from listings, employer WHERE listings.employer_id = employer.employer_id;")
+        cursor.execute("Select employer.name, listings.description from listings, employer "
+                       "WHERE listings.employer_id = employer.employer_id;")
         result = cursor.fetchall()
         if result:
             return render_template('splash.html', name=name, listings=result)
@@ -17,36 +20,40 @@ def index(name = None):
             return "Error"
     except Exception as e: 
         return str(e)
-@app.route('/register/', methods =["GET"])
+
+
+@app.route('/register/', methods=["GET"])
 def register_page(): 
     return render_template('register.html', form=SignupForm())
+
+
 @app.route('/register/', methods=["POST"])
 def register_post():
-    data=request.form
-    form =SignupForm(data)
+    data = request.form
+    form = SignupForm(data)
     if form.validate():
-        hashed_password = generate_password_hash(form.password.data, method = 'sha256')
+        hashed_password = generate_password_hash(form.password.data, method='sha256')
         user = User(form.username.data, form.firstName.data, form.lastName.data,
-                form.branch.data, hashed_password)
+                    form.branch.data, hashed_password)
         user.create_user()
         return redirect(url_for('index'))
     else:
-        return render_template('register.html', form=form) 
+        return render_template('register.html', form=form)
+
+
 @app.route('/listing/', methods=['GET'])
 def listings_page():
     posts = Posting.get_posts()
-    return render_template('listings.html', posts = posts)
+    return render_template('listings.html', posts=posts)
+
+
 @app.route('/listing/<int:lid>')
 def listing_detail(lid):
     post = Posting.get_post(lid)
-    return render_template("detail.html", post = post)
+    return render_template("detail.html", post=post)
 
 
-
-
-
-
-#this route must remain last
+# this route must remain last
 @app.route('/')
 def root():
     return redirect(url_for('index'))
