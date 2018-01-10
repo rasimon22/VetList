@@ -1,21 +1,20 @@
 from app import app  
 from dbconnection import connection
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, session
 from registerForm import SignupForm
 from models import User, Posting
 from werkzeug.security import generate_password_hash
 
 
 @app.route('/index')
-@app.route('/index/<name>')
-def index(name=None):
-    try: 
+def index():
+    try:
         cursor, db = connection()
         cursor.execute("Select employer.name, listings.description from listings, employer "
                        "WHERE listings.employer_id = employer.employer_id;")
         result = cursor.fetchall()
         if result:
-            return render_template('splash.html', name=name, listings=result)
+            return render_template('splash.html', listings=result)
         else:
             return "Error"
     except Exception as e: 
@@ -49,8 +48,11 @@ def listings_page():
 
 @app.route('/listing/<int:lid>')
 def listing_detail(lid):
-    post = Posting.get_post(lid)
-    return render_template("detail.html", post=post)
+    if 'uid' in session:
+        post = Posting.get_post(lid)
+        return render_template("detail.html", post=post)
+    else:
+        return redirect(url_for('login_page'))
 
 
 # this route must remain last

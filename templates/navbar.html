@@ -4,10 +4,15 @@
 <a class="navbar-brand pull-left" href="{{url_for('register_page')}}">Register</a>
 <a class="navbar-brand pull-left" href="{{url_for('listings_page')}}">Postings</a>
 <a class="navbar-brand pull-left" href="#">Account</a>
-<a class="navbar-brand pull-left" href="{{url_for('login_post')}}">Login</a>
+
+  {%if 'uid' in session%}
+  <a class="navbar-brand pull-left" href="{{url_for('logout')}}">Logout</a>
+  {%else%}
+  <a class="navbar-brand pull-left" href="{{url_for('login_post')}}">Login</a>
+  {%endif%}
 <span></span>
 <span></span>
-<span></span>
+<span>{%if 'uid' in session%}Welcome, {{session['username']}}{%endif%}</span>
 
 
 

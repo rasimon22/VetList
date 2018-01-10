@@ -1,8 +1,7 @@
 from dbconnection import connection
-from flask_login import UserMixin
 
 
-class User(UserMixin):
+class User:
     def __init__(self, username, f_name, l_name, branch,
                  password, uid=None, uso_status=None):
         self.uID = uid

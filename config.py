@@ -1,2 +1,3 @@
 DEBUG = True
-SECRET_KEY ='secretkey'
+SECRET_KEY = 'secretkey'
+TEMPLATE_AUTO_RELOAD = True

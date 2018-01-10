@@ -1,9 +1,9 @@
 {%extends "index.html"%}
 {%block page_content%}
-        {%if name%}
-        <h3 class="display-5">Welcome, {{name}}</h3>
+        {%if 'uid' in session%}
+        <h3 class="display-5">Welcome, {{session['username']}}</h3>
         {%else%}
-        <h3 class ="display-5"> Welcome</h3>
+        <h3 class ="display-5"> Welcome, user</h3>
         {%endif%}
      
     <hr>
