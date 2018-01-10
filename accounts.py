@@ -23,6 +23,8 @@ def login_post():
                 session['uid'] = user.uID
                 session['username'] = user.username
                 session['f_name'] = user.f_name
+                session['l_name'] = user.l_name
+                session['branch'] = user.branch
                 return redirect(url_for('index'))
             else:
                 return redirect(url_for('login_page', form=form))

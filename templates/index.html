@@ -12,18 +12,28 @@
     <nav class="navbar navbar-dark bg-secondary">
 <span class="navbar-brand pull-left"><a href="{{url_for('index')}}"><h1>VetList</h1></a></span>
 <span></span>
+        <a class="navbar-brand pull-left" href="#">
+    {%if 'uid' not in session%}
+    Account
+    {%else%}
+    {{session['username']}}
+    {%endif%}
+</a>
+        {%if 'uid' not in session%}
 <a class="navbar-brand pull-left" href="{{url_for('register_page')}}">Register</a>
+        {%endif%}
 <a class="navbar-brand pull-left" href="{{url_for('listings_page')}}">Postings</a>
-<a class="navbar-brand pull-left" href="#">Account</a>
 
   {%if 'uid' in session%}
   <a class="navbar-brand pull-left" href="{{url_for('logout')}}">Logout</a>
   {%else%}
   <a class="navbar-brand pull-left" href="{{url_for('login_post')}}">Login</a>
   {%endif%}
+        {%if 'uid' in session%}
+        <p>{{session['branch']}}</p>
+        {%endif%}
 <span></span>
 <span></span>
-<span>{%if 'uid' in session%}Welcome, {{session['username']}}{%endif%}</span>
 
 
 
