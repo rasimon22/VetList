@@ -49,7 +49,9 @@ def logout():
 @app.route('/account/', methods=["GET"])
 def account_page():
     if 'uid' in session:
-        return render_template('account.html')
+        return render_template('account.html',
+                               uploaded=os.path.exists(os.path.join(app.config['RESUME_FOLDER'], session['username'] +
+                                                                    ".pdf")))
     else:
         return redirect(url_for('login_page'))
 
@@ -62,10 +64,15 @@ def post_resume():
     if file.filename == '':
         return redirect(url_for('account_page'))
     if file and allowed_file(file.filename):
-        if not os.path.exists(os.path.join(app.config['UPLOAD_FOLDER'], session['username'])):
-            os.mkdir(os.path.join(app.config['UPLOAD_FOLDER'], session['username']))
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], session['username'], "resume." +
+        # if not os.path.exists(os.path.join(app.config['UPLOAD_FOLDER'], session['username'])):
+        #     os.mkdir(os.path.join(app.config['UPLOAD_FOLDER'], session['username']))
+        file.save(os.path.join(app.config['RESUME_FOLDER'], session['username'] + "." +
                                file.filename.rsplit('.', 1)[1].lower()))
-        return redirect(url_for('account_page'))
+        return redirect(url_for('account_page', uploaded=True))
     else:
-        return redirect(url_for('account_page'))
+        return redirect(url_for('account_page', uploaded=False))
+
+
+@app.route('/password/', methods=["GET", "POST"])
+def change_password():
+    return "CP"

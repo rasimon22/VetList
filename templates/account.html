@@ -1,7 +1,7 @@
 {%extends "index.html"%}
 {%block page_content%}
 <h1>Account Page</h1>
-<div class="containter">
+<div class="container">
     <big>User Information</big>
     <div class="row">
         <div class="col-xs-10 col-offset-6">
@@ -10,19 +10,36 @@
                 <li class="list-group-item">Military Discharge Status:<span class="badge">
                                                                             {{session['discharge_status']}}</span></li>
                 <li class="list-group-item">Branch: {{session['branch']}}</li>
+                <li class="list-group-item"><a href="{{url_for('change_password')}}">
+                    <button class="btn btn-default" >Change Password</button></a></li>
             </ul>
         </div>
-        <div class ="col-xs-10 col-offset-12" style="width:20%;">
+        <div class ="col-xs-10 col-offset-12" style="width:4%;">
             <br>
         </div>
-        <div class="col-xs-10 col-offset-12">
-            <ul class="list-group-item"> Resume:<span style="width:20px;"></span>
-                <form class="form-horizontal" action="{{url_for('post_resume')}}" method="post" enctype="multipart/form-data">
-                    <input name="file" type="file">
-                    <input type="submit">
+        <div class="col-xs-10 col-offset-12 {%if uploaded%} alert alert-success
+                                            {%else%} alert alert-danger {%endif%}">
+            <ul class="list-group-item"> Resume:<span style="width:20px;">{%if uploaded%} Resume on file.
+                                            {%else%} Upload your resume to complete your profile. <br>  Please
+                                            note that we only accept resumes in <b>.pdf</b> format at this time
+                                                     {%endif%}</span>
+                <hr>
+
+                <form class="form-horizontal btn btn-default btn-file" action="{{url_for('post_resume')}}" method="post"
+                      enctype="multipart/form-data">
+                    <input name="file" type="file" class="btn btn-file">
+                    <input type="submit" class="btn btn-default">
                 </form>
             </ul>
-            <ul class="list-group-item">Skills:</ul>
+        </div>
+        <div class ="col-xs-10 col-offset-12" style="width:4%;">
+            <br>
+        </div>
+        <div class="row">
+            <div class="col-xs-10 col-offset-12">
+                <ul class="list-group-item">Skills:</ul>
+            </div>
+
         </div>
     </div>
 </div>
