@@ -3,13 +3,13 @@ from dbconnection import connection
 
 class User:
     def __init__(self, username, f_name, l_name, branch,
-                 password, uid=None, uso_status=None):
+                 password, uid=None, discharge_status=None):
         self.uID = uid
         self.username = username
         self.f_name = f_name
         self.l_name = l_name
         self.branch = branch
-        self.uso_status = uso_status
+        self.discharge_status = discharge_status
         self.password = password
 
     def create_user(self):
@@ -37,6 +37,18 @@ class User:
             db.close()
             return cls(result[1], result[2], result[3], result[4], result[6],
                        result[0], result[5])
+        except Exception as e:
+            print(str(e))
+
+    @classmethod
+    def user_exists(cls, username):
+        try:
+            cursor, db = connection()
+            cursor.execute("SELECT * FROM `vetlist`.`users` WHERE "
+                           "`users`.`username` = '{}'".format(username))
+            result = cursor.fetchone()
+            db.close()
+            return len(result) > 0
         except Exception as e:
             print(str(e))
 
@@ -72,7 +84,7 @@ class Posting:
                            "WHERE listings.employer_id = employer.employer_id;")
             results = cursor.fetchall()
             db.close()
-            postings = [] 
+            postings = []
             for result in results:
                 obj = cls(result[0], result[1], result[2], result[3], result[4], result[6])
                 postings.append(obj)

@@ -1,8 +1,11 @@
+import os
 from app import app
 from flask import render_template, request, redirect, url_for, session
 from models import User
 from loginForm import SigninForm
 from werkzeug.security import check_password_hash
+from werkzeug.utils import secure_filename
+from util import allowed_file
 
 
 @app.route('/login', methods=["GET"])
@@ -25,6 +28,7 @@ def login_post():
                 session['f_name'] = user.f_name
                 session['l_name'] = user.l_name
                 session['branch'] = user.branch
+                session['discharge_status'] = user.discharge_status
                 return redirect(url_for('index'))
             else:
                 return redirect(url_for('login_page', form=form))
@@ -40,3 +44,28 @@ def logout():
         return redirect('index')
     session.clear()
     return redirect(url_for('index'))
+
+
+@app.route('/account/', methods=["GET"])
+def account_page():
+    if 'uid' in session:
+        return render_template('account.html')
+    else:
+        return redirect(url_for('login_page'))
+
+
+@app.route('/upload/', methods=["POST"])
+def post_resume():
+    if 'file' not in request.files:
+        return redirect(url_for('account_page'))
+    file = request.files['file']
+    if file.filename == '':
+        return redirect(url_for('account_page'))
+    if file and allowed_file(file.filename):
+        if not os.path.exists(os.path.join(app.config['UPLOAD_FOLDER'], session['username'])):
+            os.mkdir(os.path.join(app.config['UPLOAD_FOLDER'], session['username']))
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], session['username'], "resume." +
+                               file.filename.rsplit('.', 1)[1].lower()))
+        return redirect(url_for('account_page'))
+    else:
+        return redirect(url_for('account_page'))

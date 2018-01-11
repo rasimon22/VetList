@@ -12,11 +12,11 @@
     <nav class="navbar navbar-dark bg-secondary">
 <span class="navbar-brand pull-left"><a href="{{url_for('index')}}"><h1>VetList</h1></a></span>
 <span></span>
-        <a class="navbar-brand pull-left" href="#">
+        <a class="navbar-brand pull-left" href="{{url_for('account_page')}}">
     {%if 'uid' not in session%}
     Account
     {%else%}
-    {{session['username']}}
+            <big>{{session['f_name']}} {{session['l_name']}}</big> <small>Account Info</small>
     {%endif%}
 </a>
         {%if 'uid' not in session%}

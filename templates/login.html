@@ -1,33 +1,37 @@
 {%extends "index.html"%}
 {%block page_content%}
-    <h1 class="page-header"> Login </h1>
-    <hr>
-    <div class="container">
-        <style>
-            img{max-height:60%; max-width:60%;float:left;margin-right: 17%;}
+<h1 class="page-header"> Login </h1>
+<hr>
+<div class="container">
+    <style>
+            img{max-height:40%; max-width:40%;float:auto;margin-right: 17%; margin-bottom: 2%;}
         </style>
-        <img src="http://www.seahawks.com/sites/seahawks.com/files/styles/open_graph__large/public/_video_thumbnails/screen_shot_2017-12-17_at_3.59.18_pm.png?itok=YihmslQh">
-    </div>
-    <div class="container">
-        <form class ="form-horizontal" action="{{url_for('login_post')}}" method = "POST">
-            <fieldset>
-                <div class="control-group">
-                    <div class="controls">
-                        <div class="form-group {%if form.username.errors%} alert alert-danger
+    <img src="http://www.seahawks.com/sites/seahawks.com/files/styles/open_graph__large/public/_video_thumbnails/screen_shot_2017-12-17_at_3.59.18_pm.png?itok=YihmslQh">
+</div>
+<div class="container">
+    <form class ="form-horizontal" action="{{url_for('login_post')}}" method = "POST">
+        <fieldset>
+            <div class="control-group">
+                <div class="controls">
+                    <div class="form-group {%if form.username.errors%} alert alert-danger
                             {%endif%}">
                         {{form.hidden_tag()}}
                         {{form.username(class="input-xlarge",placeholder="Username")}}
-                        </div>
-                        <div class="form-group {%if form.password.errors%} alert alert-danger 
+                    </div>
+                    <div class="form-group {%if form.password.errors%} alert alert-danger
                             {%endif%}">
                         {{form.password(class="input-xlarge",placeholder="password")}}
                         </br>
-                        {{form.remember.label}}
-                        {{form.remember(class="input-xlarge")}}
                         </br>
-                        <input type="submit" class="btn btn-success">
                     </div>
+                    <div class="form-group"
+                         {{form.remember.label}}
+                         {{form.remember(class="input-xlarge")}}
                 </div>
-            </fieldset>
-    </div>
-    {%endblock%}
+                <input type="submit" class="btn btn-success">
+            </div>
+</div>
+</fieldset>
+</form>
+</div>
+{%endblock%}
