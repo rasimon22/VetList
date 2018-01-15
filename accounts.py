@@ -4,7 +4,6 @@ from flask import render_template, request, redirect, url_for, session
 from models import User
 from loginForm import SigninForm
 from werkzeug.security import check_password_hash
-from werkzeug.utils import secure_filename
 from util import allowed_file
 
 
@@ -64,8 +63,6 @@ def post_resume():
     if file.filename == '':
         return redirect(url_for('account_page'))
     if file and allowed_file(file.filename):
-        # if not os.path.exists(os.path.join(app.config['UPLOAD_FOLDER'], session['username'])):
-        #     os.mkdir(os.path.join(app.config['UPLOAD_FOLDER'], session['username']))
         file.save(os.path.join(app.config['RESUME_FOLDER'], session['username'] + "." +
                                file.filename.rsplit('.', 1)[1].lower()))
         return redirect(url_for('account_page', uploaded=True))
@@ -76,3 +73,13 @@ def post_resume():
 @app.route('/password/', methods=["GET", "POST"])
 def change_password():
     return "CP"
+
+
+@app.route('/add/skills', methods=["GET", "POST"])
+def add_skills():
+    datastring = ""
+    if request.method == "POST":
+        for data in request.form:
+            datastring += str(data) + " " + request.form[data]
+        return datastring
+    return render_template("skills.html")

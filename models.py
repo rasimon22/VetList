@@ -106,3 +106,33 @@ class Posting:
             return obj
         except Exception as e:
             return str(e)
+
+
+class Skill:
+    def __init__(self, skill, pro, uid):
+        self.skill = skill
+        self.pro = pro
+        self.uid = uid
+
+    @classmethod
+    def get_skills_for_user(cls, user):
+        try:
+            cursor, db = connection()
+            cursor.execute("SELECT * FROM skills WHERE user_id = {}".format(user))
+            result = cursor.fetchall()
+            db.close()
+            resultSet = []
+            for line in result:
+                resultSet.append(cls(line[2], line[3]))
+            return resultSet
+        except Exception as e:
+            return str(e)
+
+    def create_skill(self):
+        try:
+            cursor, db = connection()
+            cursor.execute("INSERT INTO `vetlist`.`skills` (`user_id`, `skill`, `proficiency`) VALUES "
+                           "({}, {}, {})".format(self.uid, self.skill, self.pro))
+        except Exception as e:
+            return str(e)
+

@@ -1,0 +1,37 @@
+{%extends "index.html"%}
+{%block page_content%}
+<script>
+    function addSkill(){
+        var node = document.createElement("LI");
+        var textnode = document.createTextNode("Skill:" + document.getElementById("skill").value + " " +
+            "Proficiency:" + document.getElementById("pro").value);
+        node.setAttribute("class", "list-group-item");
+        node.appendChild(textnode);
+        document.getElementById("skills_list").appendChild(node);
+
+        var hiddenField = document.createElement("input");
+        hiddenField.setAttribute("type", "hidden");
+        hiddenField.setAttribute("name", document.getElementById("skill").value);
+        hiddenField.setAttribute("value", document.getElementById("pro").value);
+        document.getElementById("send").appendChild(hiddenField);
+        console.log(hiddenField.value);
+        document.getElementById("new_skill").reset();
+    }
+
+</script>
+<h1 class="page-header">Add Skills</h1>
+<ul class="list-group" id="skills_list">
+</ul>
+<br>
+<form id="new_skill">
+    <label for="skill">Skill:</label><input id ="skill" type="text"><br>
+    <label for="pro">Proficiency:</label><input id="pro" type="number" min="0" max="10"><br>
+    <input type="button" onclick="addSkill()" value="Add Skill">
+    <!--<input type="button" onclick="sendSkills()" value="Save Skills">-->
+</form>
+<br>
+<form id="send" action="{{url_for('add_skills')}}" method="post">
+    <input type="submit" value="Save Skills">
+
+</form>
+{%endblock%}
